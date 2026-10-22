@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.company.regbot</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Library/Frameworks/Python.framework/Versions/3.14/bin/python3</string>
+        <string>-m</string>
+        <string>app.bot</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/you/regbot</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/Users/you/.local/bin:/usr/local/bin:/usr/bin:/bin</string>
+        <key>HOME</key>
+        <string>/Users/you</string>
+        <key>LANG</key>
+        <string>ru_RU.UTF-8</string>
+    </dict>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>ThrottleInterval</key>
+    <integer>30</integer>
+    <key>StandardOutPath</key>
+    <string>/Users/you/regbot/logs/launchd.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/you/regbot/logs/launchd.err.log</string>
+</dict>
+</plist>
