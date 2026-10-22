@@ -1,0 +1,33 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>РегБот · Vladislav352</title><meta name="description" content="Telegram-бот для продуктолога: медизделия, косметика, таможня. Корпус нормативных актов, SQLite FTS5, LLM без API-ключей.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%234d8dff'/%3E%3Cstop offset='1' stop-color='%238a63f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://vladislav352.github.io/assets/site.css"><script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
+const dark=true;
+mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'loose',themeVariables:{
+ fontFamily:'"Golos Text",sans-serif',fontSize:'14px',
+ primaryColor:dark?'#1b2330':'#ffffff',primaryTextColor:dark?'#e8ecf2':'#131922',primaryBorderColor:'#4d8dff',
+ lineColor:dark?'#8a63f7':'#6b4fe0',secondaryColor:dark?'#141a22':'#e9edf3',tertiaryColor:dark?'#0e1116':'#f3f5f8',
+ clusterBkg:dark?'#141a22':'#f3f5f8',clusterBorder:dark?'#303b4b':'#c9d2de',edgeLabelBackground:dark?'#141a22':'#ffffff',
+ noteBkgColor:dark?'#1b2330':'#e9edf3',noteTextColor:dark?'#e8ecf2':'#131922'}});
+</script></head><body><nav class="nav"><div class="wrap"><a class="brand" href="https://vladislav352.github.io/"><i></i>Vladislav352</a>
+<div class="nav-links"><a href="https://vladislav352.github.io/#projects">Проекты</a><a href="https://vladislav352.github.io/#about">Обо мне</a><a href="https://github.com/Vladislav352">GitHub</a></div></div></nav>
+<header class="wrap hero"><div><h1>Регуляторный ассистент <em>с цитатами</em> вместо догадок</h1><p>Telegram-бот для продуктолога: медизделия, косметика, таможня. Корпус нормативных актов, SQLite FTS5, LLM без API-ключей.</p><div class="cta"><a class="btn primary" href="https://github.com/Vladislav352/regbot">Код на GitHub</a></div></div><div class="frame"><img src="chat.png" alt="РегБот: главный экран" loading="eager"></div></header>
+<div class="hr"></div>
+<section id="inside"><div class="wrap"><h2>Что внутри</h2><p class="lead">Вопрос текстом, ответ по базе знаний с ссылками на первоисточник и предупреждением о дате сборки.</p><div class="bento"><div class="tile c3 grad"><div class="num">40+</div><h3>нормативных актов в корпусе</h3><p>ЕАЭС, РФ, таможня: тексты и манифесты с номерами, датами и редакциями.</p></div><div class="tile c3 steel"><h3>Двухступенчатый поиск</h3><p>LLM превращает вопрос в формальные запросы, FTS5 отдаёт фрагменты, LLM отвечает только из них.</p></div><div class="tile c2"><h3>Реестры</h3><p>/ru и /decl: Росздравнадзор и Росаккредитация, кэш на сутки или прямая ссылка.</p></div><div class="tile c2"><h3>Дайджест по понедельникам</h3><p>RSS отраслевых источников, LLM отбирает важное для продукции.</p></div><div class="tile c2"><h3>Доступ по заявке</h3><p>/start отправляет админу карточку с кнопками, белый список в базе.</p></div></div></div></section>
+<div class="hr"></div>
+<section id="how"><div class="wrap"><h2>Как устроено</h2><p class="lead">Один процесс long polling, одна база SQLite с полнотекстовым индексом, LLM через подписку ChatGPT.</p><div class="diagram"><pre class="mermaid">flowchart TB
+  U[Продуктолог в Telegram] --&gt; B[app.bot&lt;br/&gt;long polling, доступ, кнопки]
+  B --&gt; S[app.search]
+  S --&gt; Q[LLM: вопрос → 2-4 формальных запроса]
+  Q --&gt; F[(SQLite FTS5&lt;br/&gt;чанки корпуса)]
+  F --&gt; A[LLM: ответ только из фрагментов + ссылки]
+  A --&gt; B
+  B --&gt; R[app.registries&lt;br/&gt;РЗН · ФСА, кэш 24 ч]
+  M[app.monitor, понедельник 08:30] --&gt; RSS[RSS Альта · РЗН] --&gt; D[LLM-дайджест] --&gt; B
+  I[app.ingest] --&gt; F
+  C[corpus/raw + манифесты] --&gt; I</pre></div><div class="tags" style="margin-top:22px"><span class="tag">Python stdlib</span><span class="tag">SQLite FTS5</span><span class="tag">Telegram Bot API</span><span class="tag">Codex CLI</span><span class="tag">RSS</span><span class="tag">launchd</span></div></div></section>
+<div class="hr"></div><section id="screens"><div class="wrap"><h2>Экраны</h2><p class="lead">Настоящие данные; названия компаний и брендов заменены.</p><div class="gallery"><figure class="wide"><div class="frame"><img src="chat.png" alt="Ответ на вопрос о переоформлении декларации: рамка, где проверить, важный нюанс, дата базы" loading="lazy"></div><figcaption>Ответ на вопрос о переоформлении декларации: рамка, где проверить, важный нюанс, дата базы</figcaption></figure></div></div></section>
+<div class="hr"></div>
+<section id="hard"><div class="wrap"><h2>Что было сложного</h2><div class="hard"><div><b>Заказчик не хотел платных ключей</b><p>LLM-движок: Codex CLI через подписку ChatGPT, с остыванием при лимитах и честным сообщением, если движок исчерпан.</p></div><div><b>Галлюцинации по датам и ставкам</b><p>Промпт запрещает отвечать вне фрагментов, каждый ответ со ссылкой и предупреждением о дате сборки базы.</p></div><div><b>У реестров нет публичного API</b><p>Проверки через LLM-агента были дорогими и ненадёжными; заменены на кэш и прямые ссылки для ручной сверки.</p></div></div></div></section>
+<footer><div class="wrap"><div>Владислав Арсентьев, AI-интегратор · <a href="https://t.me/Skit888">@Skit888</a></div><div><a href="https://vladislav352.github.io/wb-monitor/">WB-монитор</a> · <a href="https://vladislav352.github.io/finpulse/">Фин.пульс</a> · <a href="https://vladislav352.github.io/command-center/">Командный центр</a> · <a href="https://vladislav352.github.io/DocChecker/">DocChecker</a></div></div></footer></body></html>

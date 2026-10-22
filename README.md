@@ -1,5 +1,11 @@
 # РегБот: Telegram-ассистент по регуляторике медизделий и косметики
 
+![РегБот](docs/banner.svg)
+
+![Python](https://img.shields.io/badge/Python-stdlib-4d8dff?style=flat-square&labelColor=1b2330) ![корпус](https://img.shields.io/badge/корпус-40+_НПА-8a63f7?style=flat-square&labelColor=1b2330) ![LLM](https://img.shields.io/badge/LLM-без_API--ключей-4d8dff?style=flat-square&labelColor=1b2330) ![статус](https://img.shields.io/badge/статус-в_продакшене-8a63f7?style=flat-square&labelColor=1b2330)
+
+**[Страница проекта](https://vladislav352.github.io/regbot/)**
+
 > RAG-бот для продуктолога без единой pip-зависимости: корпус нормативных актов (ЕАЭС, РФ, таможня), полнотекстовый поиск SQLite FTS5, LLM через подписку ChatGPT (Codex CLI) без API-ключей, живые проверки реестров Росздравнадзора и Росаккредитации и еженедельный дайджест изменений. Всё на одном Mac mini под launchd.
 >
 > *Regulatory assistant bot (medical devices, cosmetics, customs/import from China) for a product manager: Python stdlib + SQLite FTS5 RAG with citations, registry checks, weekly digest. No pip deps, no API keys.*
@@ -18,6 +24,20 @@
 - Каждый ответ помечен: «данные из базы на дату сборки, перед решением сверься с первоисточником».
 
 ## Как устроено
+
+```mermaid
+flowchart TB
+  U[Продуктолог в Telegram] --> B[app.bot<br/>long polling, доступ, кнопки]
+  B --> S[app.search]
+  S --> Q[LLM: вопрос → 2-4 формальных запроса]
+  Q --> F[(SQLite FTS5<br/>чанки корпуса)]
+  F --> A[LLM: ответ только из фрагментов + ссылки]
+  A --> B
+  B --> R[app.registries<br/>РЗН · ФСА, кэш 24 ч]
+  M[app.monitor, понедельник 08:30] --> RSS[RSS Альта · РЗН] --> D[LLM-дайджест] --> B
+  I[app.ingest] --> F
+  C[corpus/raw + манифесты] --> I
+```
 
 ```
 app/bot.py         long polling Bot API, команды, доступ, кнопки фидбека
